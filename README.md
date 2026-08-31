@@ -37,10 +37,12 @@ Replace placeholders anytime:
 
 ## Deploy
 
-Push to `main`. GitHub Actions builds and publishes `dist/` to `gh-pages` for `bootybyemal.com`.
+Push to `main`. GitHub Actions builds and publishes `dist/` to `gh-pages`.
+
+Live URL until DNS is ready: https://4444studios.github.io/bootybymal/
 
 Repo secrets (optional):
 
 - `VITE_FORM_PROXY_URL`
 
-Pages settings: source `gh-pages`, custom domain `bootybyemal.com`, HTTPS on.
+When you point `bootybyemal.com` at GitHub Pages, add `public/CNAME` with that domain and set Pages → Custom domain. Asset paths are relative, so the same build works on both.
