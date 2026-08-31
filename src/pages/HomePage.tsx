@@ -1,24 +1,14 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react'
-import aboutImage from '../assets/about.webp'
-import heroImage from '../assets/hero.webp'
-import philosophyImage from '../assets/philosophy.webp'
+import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import bbmMark from '../assets/bbm-mark.png'
 import bbmWordmark from '../assets/bbm-wordmark.jpg'
-import bbmLogoSvg from '../assets/bbm-logo.svg'
 import ContactApplicationForm from '../components/ContactApplicationForm'
 import ResultsCarousel from '../components/ResultsCarousel'
-
-const INSTAGRAM = 'https://www.instagram.com/bootybyemal/'
-const TIKTOK = 'https://www.tiktok.com/@xoxomalini'
-
-function shouldShowIntroSplash(): boolean {
-  if (typeof window === 'undefined') return false
-  try {
-    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  } catch {
-    return false
-  }
-}
+import SplashIntro from '../components/SplashIntro'
+import VersionPicker from '../components/VersionPicker'
+import { useParallaxBg } from '../hooks/useParallaxBg'
+import { IG_ABOUT, IG_HERO, IG_PHILOSOPHY } from '../lib/images'
+import { INSTAGRAM, TIKTOK } from '../lib/site'
 
 function HomePage() {
   const philosophySectionRef = useRef<HTMLElement>(null)
@@ -27,33 +17,6 @@ function HomePage() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
   const [showFloatingCta, setShowFloatingCta] = useState<boolean>(false)
-
-  const [splashActive, setSplashActive] = useState(shouldShowIntroSplash)
-  const [splashExiting, setSplashExiting] = useState(false)
-
-  useLayoutEffect(() => {
-    if (!splashActive) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = prev
-    }
-  }, [splashActive])
-
-  useEffect(() => {
-    if (!splashActive) return
-    const holdMs = window.matchMedia('(max-width: 768px)').matches ? 1400 : 2000
-    const exitMs = 700
-    const t1 = window.setTimeout(() => setSplashExiting(true), holdMs)
-    const t2 = window.setTimeout(() => {
-      setSplashActive(false)
-      setSplashExiting(false)
-    }, holdMs + exitMs)
-    return () => {
-      window.clearTimeout(t1)
-      window.clearTimeout(t2)
-    }
-  }, [splashActive])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,7 +37,12 @@ function HomePage() {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Element
-      if (isMobileMenuOpen && target && !target.closest('.nav-container')) {
+      if (
+        isMobileMenuOpen &&
+        target &&
+        !target.closest('.nav-container') &&
+        !target.closest('#mobile-nav')
+      ) {
         setIsMobileMenuOpen(false)
       }
     }
@@ -128,47 +96,7 @@ function HomePage() {
     }
   }, [])
 
-  useEffect(() => {
-    const section = philosophySectionRef.current
-    const bg = philosophyBgRef.current
-    if (!section || !bg) return
-
-    const mobileQuery = '(max-width: 768px)'
-    const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    let raf = 0
-
-    const updateParallax = () => {
-      if (!window.matchMedia(mobileQuery).matches || reduceMotion()) {
-        bg.style.transform = ''
-        return
-      }
-      const rect = section.getBoundingClientRect()
-      const vh = window.innerHeight || 1
-      const centerOffset = rect.top + rect.height / 2 - vh / 2
-      const y = centerOffset * -0.22
-      bg.style.transform = `translate3d(0, ${y}px, 0)`
-    }
-
-    const schedule = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(updateParallax)
-    }
-
-    const mq = window.matchMedia(mobileQuery)
-    schedule()
-    window.addEventListener('scroll', schedule, { passive: true })
-    window.addEventListener('resize', schedule)
-    mq.addEventListener('change', schedule)
-
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener('scroll', schedule)
-      window.removeEventListener('resize', schedule)
-      mq.removeEventListener('change', schedule)
-      bg.style.transform = ''
-    }
-  }, [])
+  useParallaxBg(philosophySectionRef, philosophyBgRef)
 
   const marqueeItems = [
     'Glute-Focused',
@@ -180,38 +108,18 @@ function HomePage() {
   ]
 
   return (
-    <div className="app">
+    <div className="app look-v1">
+      <SplashIntro />
+      <VersionPicker />
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
 
-      {splashActive && (
-        <div
-          className={`splash-intro ${splashExiting ? 'splash-intro--exit' : ''}`}
-          aria-hidden="true"
-        >
-          <div className="splash-intro__curtain" />
-          <div className="splash-intro__grain" aria-hidden="true" />
-          <div className="splash-intro__inner">
-            <div className="splash-intro__brand">
-              <img
-                src={bbmLogoSvg}
-                alt=""
-                className="splash-intro__logo"
-                width={737}
-                height={631}
-              />
-            </div>
-            <div className="splash-intro__rule" />
-          </div>
-        </div>
-      )}
-
       <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
-          <a href="#" className="logo" onClick={() => setIsMobileMenuOpen(false)}>
+          <Link to="/" className="logo" onClick={() => setIsMobileMenuOpen(false)}>
             <img src={bbmMark} alt="Booty by Mal" width={1024} height={1024} />
-          </a>
+          </Link>
           <button
             className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -223,20 +131,7 @@ function HomePage() {
             <span></span>
             <span></span>
           </button>
-          {isMobileMenuOpen && (
-            <div className="mobile-menu-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>
-          )}
-          <div
-            id="mobile-nav"
-            className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}
-          >
-            <button
-              className="mobile-nav-close"
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Close menu"
-            >
-              ×
-            </button>
+          <div className="nav-links nav-links--desktop">
             <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>
               About
             </a>
@@ -258,19 +153,51 @@ function HomePage() {
             >
               Instagram
             </a>
-            <a
-              href={TIKTOK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-link-mobile-only"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              TikTok
-            </a>
             <a href="#contact" className="nav-cta-button" onClick={() => setIsMobileMenuOpen(false)}>
               Get Started →
             </a>
           </div>
+        </div>
+        {isMobileMenuOpen && (
+          <div className="mobile-menu-overlay" onClick={() => setIsMobileMenuOpen(false)} />
+        )}
+        <div
+          id="mobile-nav"
+          className={`nav-links nav-links--sheet${isMobileMenuOpen ? ' is-open' : ''}`}
+        >
+          <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>
+            About
+          </a>
+          <a href="#results" onClick={() => setIsMobileMenuOpen(false)}>
+            Results
+          </a>
+          <a href="#services" onClick={() => setIsMobileMenuOpen(false)}>
+            Services
+          </a>
+          <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+            Apply
+          </a>
+          <a
+            href={INSTAGRAM}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="instagram-link"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Instagram
+          </a>
+          <a
+            href={TIKTOK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link-mobile-only"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            TikTok
+          </a>
+          <a href="#contact" className="nav-cta-button" onClick={() => setIsMobileMenuOpen(false)}>
+            Get Started →
+          </a>
         </div>
       </nav>
 
@@ -279,7 +206,7 @@ function HomePage() {
           <div
             className="hero-bg"
             aria-hidden="true"
-            style={{ backgroundImage: `url(${heroImage})` }}
+            style={{ backgroundImage: `url(${IG_HERO})` }}
           />
           <div className="hero-overlay" aria-hidden="true" />
           <div className="hero-grain" aria-hidden="true" />
@@ -328,7 +255,7 @@ function HomePage() {
               </div>
               <div className="about-image-wrapper reveal-right">
                 <img
-                  src={aboutImage}
+                  src={IG_ABOUT}
                   alt="Booty by Mal coaching"
                   className="about-image"
                   loading="lazy"
@@ -387,7 +314,7 @@ function HomePage() {
           <div
             ref={philosophyBgRef}
             className="philosophy-bg"
-            style={{ backgroundImage: `url(${philosophyImage})` }}
+            style={{ backgroundImage: `url(${IG_PHILOSOPHY})` }}
             aria-hidden="true"
           />
           <div className="philosophy-content">

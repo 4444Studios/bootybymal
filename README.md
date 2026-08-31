@@ -1,6 +1,6 @@
 # Booty by Mal
 
-One-page coaching site for [bootybyemal.com](https://bootybyemal.com/). Layout and intake UX follow HxTraining; branding is dark-feminine around the BBM sticker logo.
+Coaching site for [bootybyemal.com](https://bootybyemal.com/). Three looks at `/`, `/v2`, and `/v3`. Layout and intake UX follow HxTraining; branding is dark-feminine around the BBM sticker logo.
 
 ## Setup
 
@@ -27,13 +27,7 @@ Then add the worker URL to `.env` locally and as the `VITE_FORM_PROXY_URL` GitHu
 
 ## Photos
 
-Replace placeholders anytime:
-
-- `src/assets/hero.webp`
-- `src/assets/about.webp`
-- `src/assets/philosophy.webp`
-- `src/assets/placeholders/result-1.webp` … `result-3.webp`
-- `src/assets/bbm-logo.png` (prefer a transparent cutout of the sticker)
+Photos live in `src/assets/ig/` (hero, about, philosophy). Swap those files to update all three looks. Results carousel still uses `src/assets/placeholders/result-*.webp`.
 
 ## Deploy
 
@@ -45,4 +39,6 @@ Repo secrets (optional):
 
 - `VITE_FORM_PROXY_URL`
 
-When you point `bootybyemal.com` at GitHub Pages, add `public/CNAME` with that domain and set Pages → Custom domain. Asset paths are relative, so the same build works on both.
+Looks: `/` (current), `/v2` (editorial), `/v3` (lookbook). A Look picker is on every page until she picks a winner.
+
+When you point `bootybyemal.com` at GitHub Pages, add `public/CNAME` with that domain and set Pages → Custom domain.
