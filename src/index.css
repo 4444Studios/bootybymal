@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --bbm-bg: #050304;
+  --bbm-surface: #12080c;
+  --bbm-elevated: #1c0e14;
+  --bbm-coral: #ff6b7d;
+  --bbm-coral-deep: #e84d62;
+  --bbm-peach: #ffd1a9;
+  --bbm-cream: #fff4ea;
+  --bbm-sage: #8fa37a;
+  --bbm-text: #fff6f1;
+  --bbm-muted: rgba(255, 214, 196, 0.62);
+  --bbm-border: rgba(255, 107, 125, 0.22);
+  --bbm-glow: rgba(255, 107, 125, 0.38);
+  --bbm-nav-h: 5.25rem;
+  --bbm-radius: 1.35rem;
+  --bbm-radius-sm: 999px;
+  --bbm-font: 'Outfit', system-ui, sans-serif;
+  --bbm-script: 'Great Vibes', 'Segoe Script', cursive;
+
+  font-family: var(--bbm-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--bbm-text);
+  background-color: var(--bbm-bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--bbm-nav-h);
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+button,
+a,
+[type='button'],
+[type='submit'] {
+  touch-action: manipulation;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--bbm-coral);
+  outline-offset: 3px;
+}
