@@ -41,4 +41,4 @@ Repo secrets (optional):
 
 Looks: `/` (current), `/v2` (editorial), `/v3` (lookbook). A Look picker is on every page until she picks a winner.
 
-When you point `bootybyemal.com` at GitHub Pages, add `public/CNAME` with that domain and set Pages → Custom domain.
+When you point `bootybyemal.com` at GitHub Pages, add `public/CNAME` with that domain, set Pages → Custom domain, and change Vite `base` in `vite.config.ts` from `/bootybymal/` to `/`.

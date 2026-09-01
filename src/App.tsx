@@ -4,9 +4,11 @@ import EditorialPage from './pages/v2/EditorialPage'
 import LookbookPage from './pages/v3/LookbookPage'
 import './App.css'
 
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/v2" element={<EditorialPage />} />

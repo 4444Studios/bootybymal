@@ -15,7 +15,7 @@ export default defineConfig({
       },
     },
   ],
-  base: '/',
+  base: '/bootybymal/',
   build: {
     rollupOptions: {
       output: {

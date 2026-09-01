@@ -49,17 +49,6 @@ html:has(.look-v3) {
   text-transform: uppercase;
 }
 
-.lb-kicker::before {
-  content: '';
-  display: inline-block;
-  width: 0.55rem;
-  height: 0.55rem;
-  margin-right: 0.45rem;
-  border-radius: 50% 0 50% 50%;
-  background: var(--lb-sage);
-  transform: rotate(-20deg);
-}
-
 .look-v3 h2 {
   margin: 0 0 1rem;
   font-family: var(--lb-display);
@@ -75,7 +64,7 @@ html:has(.look-v3) {
 }
 
 .lb-nav__mark img {
-  height: 3.4rem;
+  height: 3rem;
   width: auto;
 }
 
@@ -92,7 +81,7 @@ html:has(.look-v3) {
 }
 
 .lb-hero {
-  padding: 3.5rem 1.2rem 4rem;
+  padding: 3.5rem 1.2rem 5rem;
   text-align: center;
 }
 
@@ -120,7 +109,7 @@ html:has(.look-v3) {
   min-height: 48px;
   align-items: center;
   padding: 0 1.4rem;
-  border-radius: 999px;
+  border-radius: 0.5rem;
   background: var(--lb-coral);
   color: #fff;
   text-decoration: none;
@@ -145,7 +134,7 @@ html:has(.look-v3) {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2.5rem 2rem;
+  padding: 3rem 2.5rem;
 }
 
 .lb-about,
@@ -154,14 +143,14 @@ html:has(.look-v3) {
 .lb-quotes,
 .lb-ugc,
 .lb-contact {
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 
 .lb-about img {
   display: block;
   width: min(420px, 100%);
   margin: 1.5rem auto 0;
-  border-radius: 1.6rem;
+  border-radius: 0.75rem;
 }
 
 .lb-tiles {
@@ -172,9 +161,9 @@ html:has(.look-v3) {
 
 .lb-tiles article {
   background: #fff;
-  border-radius: 1.4rem;
+  border-radius: 0.85rem;
   overflow: hidden;
-  box-shadow: 0 10px 28px rgba(58, 26, 30, 0.06);
+  box-shadow: 0 10px 28px rgba(58, 26, 30, 0.04);
 }
 
 .lb-tiles img {
@@ -204,7 +193,7 @@ html:has(.look-v3) {
   aspect-ratio: 1;
   max-width: 560px;
   margin: 0 auto;
-  border-radius: 1.4rem;
+  border-radius: 0.75rem;
   overflow: hidden;
 }
 
@@ -217,7 +206,7 @@ html:has(.look-v3) {
   margin: 0;
   padding: 1.4rem 1.3rem;
   background: #fff;
-  border-radius: 1.2rem;
+  border-radius: 0.75rem;
 }
 
 .look-v3 .quote-card__text {
@@ -246,7 +235,7 @@ html:has(.look-v3) {
 
 .look-v3 .ugc-mosaic__cell {
   aspect-ratio: 1;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   overflow: hidden;
 }
 
