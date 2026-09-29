@@ -399,7 +399,7 @@ export default function ContactApplicationForm() {
       {isMobile ? (
         <div className="contact-form-mobile-entry">
           <p className="contact-form-mobile-entry__text">
-            Apply in a few quick steps — takes about 3 minutes.
+            Apply in a few quick steps - takes about 3 minutes.
           </p>
           <button type="button" className="contact-form-mobile-entry__cta" onClick={openWizard}>
             {hasFormContent(formData) ? 'Continue application' : 'Start application'}

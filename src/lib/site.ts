@@ -10,18 +10,18 @@ export const SERVICES = [
   {
     name: 'Online coaching',
     blurb:
-      'Custom programming, weekly check-ins, and direct access to Mal — train anywhere and stay accountable.',
+      'Custom programming, weekly check-ins, and direct access to Mal - train anywhere and stay accountable.',
   },
   {
     name: 'Group Training',
     blurb:
-      'Train with other women who are locked in. Shared energy, structured sessions, and a 60-day commitment.',
+      'Train with others who are locked in. Shared energy, structured sessions, and a 60-day commitment.',
   },
 ] as const
 
 export const QUOTES = [
   {
-    quote: 'I finally have a plan that fits my life — and I can see it in how my jeans sit.',
+    quote: 'I finally have a plan that fits my life - and I can see it in how my jeans sit.',
     author: 'Sample client',
     location: '1 on 1',
   },
@@ -38,4 +38,4 @@ export const QUOTES = [
 ] as const
 
 export const MARQUEE =
-  'Glute-focused · Women-first · 1 on 1 · Online coaching · Group training · 60-day commitment · '
+  'Glute-focused · Client-First · 1 on 1 · Online coaching · Group training · 60-day commitment · '

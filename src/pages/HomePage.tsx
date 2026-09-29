@@ -1,34 +1,51 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import before1 from '../assets/before1.JPG'
+import after1 from '../assets/after1.JPG'
+import before2 from '../assets/before2.JPEG'
+import after2 from '../assets/after2.JPG'
+import before3 from '../assets/before3.JPG'
+import after3 from '../assets/after3.jpeg'
+import trainer1 from '../assets/trainer1.JPG'
+import trainer2 from '../assets/trainer2.JPG'
+import trainer3 from '../assets/trainer3.JPG'
+import trainer5 from '../assets/trainer5.JPG'
+import trainer7 from '../assets/trainer7.JPG'
+import trainer8 from '../assets/trainer8.JPG'
 import bbmMark from '../assets/bbm-mark.png'
 import bbmWordmark from '../assets/bbm-wordmark.jpg'
 import ContactApplicationForm from '../components/ContactApplicationForm'
-import ResultsCarousel from '../components/ResultsCarousel'
 import SplashIntro from '../components/SplashIntro'
-import VersionPicker from '../components/VersionPicker'
+import AnimatedSection from '../components/shared/AnimatedSection'
+import BeforeAfterSlider from '../components/shared/BeforeAfterSlider'
+import QuoteCarousel from '../components/shared/QuoteCarousel'
+import UgcMosaic from '../components/shared/UgcMosaic'
 import { useParallaxBg } from '../hooks/useParallaxBg'
 import { IG_ABOUT, IG_HERO, IG_PHILOSOPHY } from '../lib/images'
-import { INSTAGRAM, TIKTOK } from '../lib/site'
+import { INSTAGRAM, MARQUEE, SERVICES, TIKTOK } from '../lib/site'
+import '../editorial.css'
 
-function HomePage() {
-  const philosophySectionRef = useRef<HTMLElement>(null)
-  const philosophyBgRef = useRef<HTMLDivElement>(null)
+const TILE_IMGS = [trainer7, trainer2, trainer5]
+const UGC_TILES = [
+  { src: trainer1, alt: '' },
+  { src: trainer3, alt: '' },
+  { src: trainer8, alt: '' },
+  { src: trainer5, alt: '' },
+  { src: trainer2, alt: '' },
+  { src: trainer7, alt: '' },
+]
 
+export default function HomePage() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-  const [showFloatingCta, setShowFloatingCta] = useState<boolean>(false)
+  const statementRef = useRef<HTMLElement>(null)
+  const statementBgRef = useRef<HTMLDivElement>(null)
+  
+  useParallaxBg(statementRef, statementBgRef)
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
-      const contactSection = document.getElementById('contact')
-      const heroHeight = window.innerHeight
-      const contactTop = contactSection?.offsetTop || Infinity
-      const scrollPosition = window.scrollY + window.innerHeight
-
-      setShowFloatingCta(
-        window.scrollY > heroHeight * 0.5 && scrollPosition < contactTop + 100
-      )
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -76,44 +93,9 @@ function HomePage() {
     }
   }, [isMobileMenuOpen])
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active')
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
-    )
-
-    const hiddenElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
-    hiddenElements.forEach(el => observer.observe(el))
-
-    return () => {
-      hiddenElements.forEach(el => observer.unobserve(el))
-    }
-  }, [])
-
-  useParallaxBg(philosophySectionRef, philosophyBgRef)
-
-  const marqueeItems = [
-    'Glute-Focused',
-    'Women-First',
-    '1 on 1',
-    'Online Coaching',
-    'Group Training',
-    '60-Day Commitment',
-  ]
-
   return (
-    <div className="app look-v1">
+    <div className="look-v2">
       <SplashIntro />
-      <VersionPicker />
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
 
       <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
@@ -122,10 +104,10 @@ function HomePage() {
           </Link>
           <button
             className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-nav"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <span></span>
             <span></span>
@@ -201,155 +183,117 @@ function HomePage() {
         </div>
       </nav>
 
-      <main id="main-content">
-        <section className="hero">
-          <div
-            className="hero-bg"
-            aria-hidden="true"
-            style={{ backgroundImage: `url(${IG_HERO})` }}
-          />
-          <div className="hero-overlay" aria-hidden="true" />
-          <div className="hero-grain" aria-hidden="true" />
-          <div className="hero-content">
-            <p className="hero-eyebrow">Coaching for women · Glutes + confidence</p>
-            <h1 className="hero-title">
-              <span className="line">Build your</span>
-              <span className="line accent">booty.</span>
-              <span className="line">Build your</span>
-              <span className="line accent">confidence.</span>
-            </h1>
-            <p className="hero-subtitle">Personalized training for women who are ready to show up</p>
-            <a href="#contact" className="cta-button">
-              <span className="cta-button-inner">Begin Your Journey</span>
-            </a>
-          </div>
-          <a href="#about" className="hero-scroll-hint" aria-label="Scroll to about">
-            <span className="hero-scroll-line" aria-hidden="true" />
-            <span className="hero-scroll-label">Discover</span>
+      <section className="ed-hero">
+        <img src={IG_HERO} alt="" className="ed-hero__poster" />
+        <div className="ed-hero__veil" />
+        <div className="ed-hero__copy">
+          <p className="hero-eyebrow" style={{ color: 'var(--ed-cream)' }}>Coaching · Glutes + confidence</p>
+          <h1 className="hero-title" style={{ color: 'var(--ed-cream)' }}>
+            <span className="line">Build your</span>
+            <span className="line accent">booty.</span>
+            <span className="line">Build your</span>
+            <span className="line accent">confidence.</span>
+          </h1>
+          <p className="hero-subtitle" style={{ color: 'var(--ed-cream)' }}>Personalized training for those who are ready to show up</p>
+          <a href="#contact" className="cta-button" style={{ display: 'inline-flex' }}>
+            <span className="cta-button-inner">Begin Your Journey</span>
           </a>
-        </section>
+        </div>
+        <div className="ed-hero__marquee" aria-hidden="true">
+          <div className="ed-hero__track">
+            <span>{MARQUEE}</span>
+            <span>{MARQUEE}</span>
+          </div>
+        </div>
+      </section>
 
-        <div className="marquee" aria-hidden="true">
-          <div className="marquee__track">
-            {[...marqueeItems, ...marqueeItems].map((item, i) => (
-              <span key={i} className="marquee__item">
-                {item}
-                <span className="marquee__dot"> ·</span>
-              </span>
+      <AnimatedSection id="about" className="ed-about">
+        <div className="ed-wrap ed-about__grid">
+          <div>
+            <p className="ed-eyebrow">Studio</p>
+            <h2>About</h2>
+            <p>
+              Booty by Mal is coaching built for everyone - glute-focused programming, real
+              accountability, and a plan that fits your life. Every client gets custom workouts,
+              nutrition guidance, and direct access to Mal.
+            </p>
+          </div>
+          <img src={IG_ABOUT} alt="Booty by Mal coaching" />
+        </div>
+      </AnimatedSection>
+
+      <AnimatedSection id="results" className="ed-results">
+        <div className="ed-wrap">
+          <p className="ed-eyebrow">Transformation</p>
+          <h2>Results</h2>
+          <div className="ed-sliders-grid">
+            <div className="ed-slider">
+              <BeforeAfterSlider before={before1} after={after1} />
+            </div>
+            <div className="ed-slider">
+              <BeforeAfterSlider before={before2} after={after2} />
+            </div>
+            <div className="ed-slider">
+              <BeforeAfterSlider before={before3} after={after3} />
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      <AnimatedSection id="services" className="ed-services lb-services-override">
+        <div className="ed-wrap">
+          <p className="ed-eyebrow">Offerings</p>
+          <h2>How we train</h2>
+          <div className="lb-tiles">
+            {SERVICES.map((item, i) => (
+              <article key={item.name}>
+                <img src={TILE_IMGS[i]} alt="" />
+                <h3>{item.name}</h3>
+                <p>{item.blurb}</p>
+              </article>
             ))}
           </div>
         </div>
+      </AnimatedSection>
 
-        <section id="about" className="about">
-          <div className="section-container">
-            <div className="about-wrapper">
-              <div className="about-text reveal-left">
-                <p className="section-eyebrow">Coaching</p>
-                <h2 className="section-title">About</h2>
-                <p className="large-text">
-                  <span className="inline-logo">Booty by Mal</span> is coaching built for women —
-                  glute-focused programming, real accountability, and a plan that fits your life. Every
-                  client gets custom workouts, nutrition guidance, and direct access to Mal. This is
-                  high-touch training for women who want results and are ready for a 60-day commitment.
-                </p>
-              </div>
-              <div className="about-image-wrapper reveal-right">
-                <img
-                  src={IG_ABOUT}
-                  alt="Booty by Mal coaching"
-                  className="about-image"
-                  loading="lazy"
-                  decoding="async"
-                  fetchPriority="low"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+      <AnimatedSection className="ed-quotes">
+        <div className="ed-wrap">
+          <p className="ed-eyebrow">Clients</p>
+          <h2>In their words</h2>
+          <QuoteCarousel />
+        </div>
+      </AnimatedSection>
 
-        <section id="results" className="results">
-          <div className="section-container">
-            <div className="section-header reveal">
-              <h2 className="section-eyebrow results-eyebrow">Results</h2>
-            </div>
-            <div className="reveal delay-100">
-              <ResultsCarousel />
-            </div>
-          </div>
-        </section>
+      <AnimatedSection className="ed-ugc">
+        <div className="ed-wrap">
+          <p className="ed-eyebrow">Social</p>
+          <h2>On Instagram</h2>
+          <UgcMosaic tiles={UGC_TILES} />
+        </div>
+      </AnimatedSection>
 
-        <section id="services" className="services">
-          <div className="section-container">
-            <div className="section-header reveal">
-              <p className="section-eyebrow">Offerings</p>
-              <h2 className="section-title">Services</h2>
-            </div>
-            <div className="services-grid">
-              <div className="service-card reveal delay-100">
-                <h3>1 on 1</h3>
-                <p>
-                  Private coaching tailored to your body, schedule, and goals. Hands-on guidance,
-                  real-time form cues, and a program that evolves with you.
-                </p>
-              </div>
-              <div className="service-card reveal delay-200">
-                <h3>Online coaching</h3>
-                <p>
-                  Custom programming, weekly check-ins, and direct access to Mal — so you can train
-                  anywhere and still stay accountable.
-                </p>
-              </div>
-              <div className="service-card reveal delay-300">
-                <h3>Group Training</h3>
-                <p>
-                  Train with other women who are locked in. Shared energy, structured sessions, and
-                  the same 60-day commitment to showing up.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+      <section ref={statementRef} className="ed-statement">
+        <div
+          ref={statementBgRef}
+          className="ed-statement__bg"
+          style={{ backgroundImage: `url(${IG_PHILOSOPHY})` }}
+          aria-hidden="true"
+        />
+        <p>Sculpt your glutes. Own your power.</p>
+      </section>
 
-        <section ref={philosophySectionRef} className="philosophy">
-          <div
-            ref={philosophyBgRef}
-            className="philosophy-bg"
-            style={{ backgroundImage: `url(${IG_PHILOSOPHY})` }}
-            aria-hidden="true"
-          />
-          <div className="philosophy-content">
-            <div className="philosophy-text reveal-scale">
-              <h2>Sculpt your glutes</h2>
-              <h2>Own your power</h2>
-            </div>
-          </div>
-        </section>
+      <AnimatedSection id="contact" className="ed-contact">
+        <div className="ed-wrap ed-contact__inner">
+          <p className="ed-eyebrow">Apply</p>
+          <h2>Get started</h2>
+          <p className="ed-contact__lead">
+            Applications are reviewed personally. Tell Mal about your goals and she will be in touch.
+          </p>
+          <ContactApplicationForm />
+        </div>
+      </AnimatedSection>
 
-        <section id="contact" className="contact">
-          <div className="section-container">
-            <div className="contact-content reveal">
-              <p className="section-eyebrow">Apply</p>
-              <h2 className="section-title">Get Started</h2>
-              <p className="contact-description">
-                Applications are reviewed personally. Tell Mal about your goals and she&apos;ll be in
-                touch to talk through what&apos;s possible for you.
-              </p>
-
-              <ContactApplicationForm />
-            </div>
-          </div>
-        </section>
-
-        <a
-          href="#contact"
-          className={`floating-cta ${showFloatingCta ? '' : 'hidden'}`}
-          aria-label="Start your application"
-        >
-          Apply now
-        </a>
-      </main>
-
-      <footer className="footer">
+      <footer className="footer" style={{ marginTop: '0', zIndex: 10, position: 'relative' }}>
         <div className="footer-content">
           <div className="footer-brand">
             <img src={bbmWordmark} alt="Booty by Mal" width={1024} height={682} />
@@ -368,5 +312,3 @@ function HomePage() {
     </div>
   )
 }
-
-export default HomePage

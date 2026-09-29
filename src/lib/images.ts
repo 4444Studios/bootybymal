@@ -1,6 +1,6 @@
-import hero from '../assets/ig/ig-hero.jpg'
-import about from '../assets/ig/ig-about.jpg'
-import philosophy from '../assets/ig/ig-philosophy.jpg'
+import hero from '../assets/trainer6.JPG'
+import about from '../assets/trainer1.JPG'
+import philosophy from '../assets/trainer4.JPG'
 
 export const IG_HERO = hero
 export const IG_ABOUT = about

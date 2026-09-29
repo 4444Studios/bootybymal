@@ -5,7 +5,7 @@ import result3 from '../assets/placeholders/result-3.webp'
 
 const SLIDE_SRCS = [result1, result2, result3] as const
 
-const SLIDE_ALT = 'Client transformation — before and after side by side'
+const SLIDE_ALT = 'Client transformation - before and after side by side'
 const SWIPE_THRESHOLD = 48
 const AUTOPLAY_MS = 5000
 const TOTAL = SLIDE_SRCS.length
@@ -177,7 +177,7 @@ function ResultsCarousel() {
           Slide {index + 1} of {TOTAL}
         </span>
         <span aria-hidden="true">
-          {padIndex(index + 1)} — {padIndex(TOTAL)}
+          {padIndex(index + 1)} - {padIndex(TOTAL)}
         </span>
       </p>
 

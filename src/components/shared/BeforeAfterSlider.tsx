@@ -17,7 +17,7 @@ export default function BeforeAfterSlider({
   after,
   beforeAlt = 'Before',
   afterAlt = 'After',
-  accent = '#ff6b7d',
+  accent = '#a8a29e',
 }: Props) {
   return (
     <ReactCompareSlider
@@ -28,7 +28,7 @@ export default function BeforeAfterSlider({
             backdropFilter: 'none',
             background: accent,
             border: 0,
-            color: '#1a0508',
+            color: '#1c1917',
             boxShadow: `0 0 0 1px ${accent}`,
           }}
           linesStyle={{ color: accent, width: 2 }}

@@ -1,16 +1,10 @@
 import { useEffect, useLayoutEffect, useState } from 'react'
 import bbmLogoSvg from '../assets/bbm-logo.svg'
 
-const SPLASH_KEY = 'bbm-splash-seen'
 
 function shouldShow(): boolean {
   if (typeof window === 'undefined') return false
-  try {
-    if (sessionStorage.getItem(SPLASH_KEY)) return false
-    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  } catch {
-    return false
-  }
+  return !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
 export default function SplashIntro() {
@@ -31,11 +25,6 @@ export default function SplashIntro() {
     const holdMs = window.matchMedia('(max-width: 768px)').matches ? 1400 : 2000
     const t1 = window.setTimeout(() => setExiting(true), holdMs)
     const t2 = window.setTimeout(() => {
-      try {
-        sessionStorage.setItem(SPLASH_KEY, '1')
-      } catch {
-        /* ignore quota / private mode */
-      }
       setActive(false)
       setExiting(false)
     }, holdMs + 700)
