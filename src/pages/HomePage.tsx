@@ -1,47 +1,35 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import before1 from '../assets/before1.JPG'
-import after1 from '../assets/after1.JPG'
-import before2 from '../assets/before2.JPEG'
-import after2 from '../assets/after2.JPG'
-import before3 from '../assets/before3.JPG'
-import after3 from '../assets/after3.jpeg'
-import trainer1 from '../assets/trainer1.JPG'
-import trainer2 from '../assets/trainer2.JPG'
-import trainer3 from '../assets/trainer3.JPG'
-import trainer5 from '../assets/trainer5.JPG'
-import trainer7 from '../assets/trainer7.JPG'
-import trainer8 from '../assets/trainer8.JPG'
+import before1 from '../assets/opt/before1.webp'
+import after1 from '../assets/opt/after1.webp'
+import before2 from '../assets/opt/before2.webp'
+import after2 from '../assets/opt/after2.webp'
+import before3 from '../assets/opt/before3.webp'
+import after3 from '../assets/opt/after3.webp'
+import trainer5 from '../assets/opt/trainer5.webp'
+import trainer7 from '../assets/opt/trainer7.webp'
+import trainer8 from '../assets/opt/trainer8.webp'
 import bbmMark from '../assets/bbm-mark.png'
-import bbmWordmark from '../assets/bbm-wordmark.jpg'
+import bbmWordmark from '../assets/opt/bbm-wordmark.webp'
 import ContactApplicationForm from '../components/ContactApplicationForm'
 import SplashIntro from '../components/SplashIntro'
 import AnimatedSection from '../components/shared/AnimatedSection'
-import BeforeAfterSlider from '../components/shared/BeforeAfterSlider'
-import QuoteCarousel from '../components/shared/QuoteCarousel'
-import UgcMosaic from '../components/shared/UgcMosaic'
-import { useParallaxBg } from '../hooks/useParallaxBg'
-import { IG_ABOUT, IG_HERO, IG_PHILOSOPHY } from '../lib/images'
+import SceneBackdrop from '../components/shared/SceneBackdrop'
+import TransformationCarousel from '../components/shared/TransformationCarousel'
+import { IG_ABOUT, IG_CONTACT, IG_HERO, IG_OFFERINGS, IG_PHILOSOPHY, IG_RESULTS } from '../lib/images'
 import { INSTAGRAM, MARQUEE, SERVICES, TIKTOK } from '../lib/site'
 import '../editorial.css'
 
-const TILE_IMGS = [trainer7, trainer2, trainer5]
-const UGC_TILES = [
-  { src: trainer1, alt: '' },
-  { src: trainer3, alt: '' },
-  { src: trainer8, alt: '' },
-  { src: trainer5, alt: '' },
-  { src: trainer2, alt: '' },
-  { src: trainer7, alt: '' },
+const TILE_IMGS = [trainer7, trainer8, trainer5]
+const TRANSFORMATIONS = [
+  { before: before1, after: after1 },
+  { before: before2, after: after2 },
+  { before: before3, after: after3 },
 ]
 
 export default function HomePage() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-  const statementRef = useRef<HTMLElement>(null)
-  const statementBgRef = useRef<HTMLDivElement>(null)
-  
-  useParallaxBg(statementRef, statementBgRef)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -183,8 +171,8 @@ export default function HomePage() {
         </div>
       </nav>
 
-      <section className="ed-hero">
-        <img src={IG_HERO} alt="" className="ed-hero__poster" />
+      <section className="ed-scene ed-hero">
+        <SceneBackdrop src={IG_HERO} position="center top" eager />
         <div className="ed-hero__veil" />
         <div className="ed-hero__copy">
           <p className="hero-eyebrow" style={{ color: 'var(--ed-cream)' }}>Coaching · Glutes + confidence</p>
@@ -207,9 +195,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <AnimatedSection id="about" className="ed-about">
-        <div className="ed-wrap ed-about__grid">
-          <div>
+      <section id="about" className="ed-scene ed-about">
+        <SceneBackdrop src={IG_ABOUT} />
+        <AnimatedSection as="div">
+          <div className="ed-wrap ed-about__copy">
             <p className="ed-eyebrow">Studio</p>
             <h2>About</h2>
             <p>
@@ -218,97 +207,88 @@ export default function HomePage() {
               nutrition guidance, and direct access to Mal.
             </p>
           </div>
-          <img src={IG_ABOUT} alt="Booty by Mal coaching" />
-        </div>
-      </AnimatedSection>
+        </AnimatedSection>
+      </section>
 
-      <AnimatedSection id="results" className="ed-results">
-        <div className="ed-wrap">
-          <p className="ed-eyebrow">Transformation</p>
-          <h2>Results</h2>
-          <div className="ed-sliders-grid">
-            <div className="ed-slider">
-              <BeforeAfterSlider before={before1} after={after1} />
-            </div>
-            <div className="ed-slider">
-              <BeforeAfterSlider before={before2} after={after2} />
-            </div>
-            <div className="ed-slider">
-              <BeforeAfterSlider before={before3} after={after3} />
+      <section id="results" className="ed-scene ed-results">
+        <SceneBackdrop src={IG_RESULTS} />
+        <AnimatedSection as="div">
+          <div className="ed-wrap">
+            <p className="ed-eyebrow">Transformation</p>
+            <h2>Results</h2>
+            <TransformationCarousel slides={TRANSFORMATIONS} />
+          </div>
+        </AnimatedSection>
+      </section>
+
+      <section id="services" className="ed-scene ed-services">
+        <SceneBackdrop src={IG_OFFERINGS} />
+        <AnimatedSection as="div">
+          <div className="ed-wrap">
+            <p className="ed-eyebrow">Offerings</p>
+            <h2>How we train</h2>
+            <div className="lb-tiles">
+              {SERVICES.map((item, i) => (
+                <article key={item.name}>
+                  <img src={TILE_IMGS[i]} alt="" />
+                  <h3>{item.name}</h3>
+                  <p>{item.blurb}</p>
+                </article>
+              ))}
             </div>
           </div>
-        </div>
-      </AnimatedSection>
+        </AnimatedSection>
+      </section>
 
-      <AnimatedSection id="services" className="ed-services lb-services-override">
-        <div className="ed-wrap">
-          <p className="ed-eyebrow">Offerings</p>
-          <h2>How we train</h2>
-          <div className="lb-tiles">
-            {SERVICES.map((item, i) => (
-              <article key={item.name}>
-                <img src={TILE_IMGS[i]} alt="" />
-                <h3>{item.name}</h3>
-                <p>{item.blurb}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
-
-      <AnimatedSection className="ed-quotes">
-        <div className="ed-wrap">
-          <p className="ed-eyebrow">Clients</p>
-          <h2>In their words</h2>
-          <QuoteCarousel />
-        </div>
-      </AnimatedSection>
-
-      <AnimatedSection className="ed-ugc">
-        <div className="ed-wrap">
-          <p className="ed-eyebrow">Social</p>
-          <h2>On Instagram</h2>
-          <UgcMosaic tiles={UGC_TILES} />
-        </div>
-      </AnimatedSection>
-
-      <section ref={statementRef} className="ed-statement">
-        <div
-          ref={statementBgRef}
-          className="ed-statement__bg"
-          style={{ backgroundImage: `url(${IG_PHILOSOPHY})` }}
-          aria-hidden="true"
-        />
+      <section className="ed-scene ed-statement">
+        <SceneBackdrop src={IG_PHILOSOPHY} />
         <p>Sculpt your glutes. Own your power.</p>
       </section>
 
-      <AnimatedSection id="contact" className="ed-contact">
-        <div className="ed-wrap ed-contact__inner">
-          <p className="ed-eyebrow">Apply</p>
-          <h2>Get started</h2>
-          <p className="ed-contact__lead">
-            Applications are reviewed personally. Tell Mal about your goals and she will be in touch.
-          </p>
-          <ContactApplicationForm />
-        </div>
-      </AnimatedSection>
+      <div className="ed-scene ed-closing">
+        <SceneBackdrop src={IG_CONTACT} />
+        <AnimatedSection id="contact" className="ed-contact">
+          <div className="ed-wrap ed-contact__inner">
+            <p className="ed-eyebrow">Apply</p>
+            <h2>Get started</h2>
+            <p className="ed-contact__lead">
+              Applications are reviewed personally. Tell Mal about your goals and she will be in touch.
+            </p>
+            <ContactApplicationForm />
+          </div>
+        </AnimatedSection>
 
-      <footer className="footer" style={{ marginTop: '0', zIndex: 10, position: 'relative' }}>
-        <div className="footer-content">
-          <div className="footer-brand">
-            <img src={bbmWordmark} alt="Booty by Mal" width={1024} height={682} />
+        <footer className="footer ed-closing__footer">
+          <div className="footer-content">
+            <div className="footer-brand">
+              <img src={bbmWordmark} alt="Booty by Mal" width={1024} height={682} />
+            </div>
+            <div className="footer-links">
+              <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer">
+                Instagram
+              </a>
+              <a href={TIKTOK} target="_blank" rel="noopener noreferrer">
+                TikTok
+              </a>
+              <span>© 2026</span>
+            </div>
           </div>
-          <div className="footer-links">
-            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer">
-              Instagram
-            </a>
-            <a href={TIKTOK} target="_blank" rel="noopener noreferrer">
-              TikTok
-            </a>
-            <span>© 2026</span>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
+
+      <a
+        href={INSTAGRAM}
+        className="ed-ig-fab"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Follow Booty by Mal on Instagram"
+      >
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none">
+          <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.7" />
+          <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.7" />
+          <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
+        </svg>
+      </a>
     </div>
   )
 }

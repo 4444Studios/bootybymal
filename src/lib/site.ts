@@ -19,23 +19,5 @@ export const SERVICES = [
   },
 ] as const
 
-export const QUOTES = [
-  {
-    quote: 'I finally have a plan that fits my life - and I can see it in how my jeans sit.',
-    author: 'Sample client',
-    location: '1 on 1',
-  },
-  {
-    quote: 'The check-ins kept me honest. Online coaching still felt like she was in the room.',
-    author: 'Sample client',
-    location: 'Online coaching',
-  },
-  {
-    quote: 'Group sessions made showing up easier. I actually look forward to training days now.',
-    author: 'Sample client',
-    location: 'Group Training',
-  },
-] as const
-
 export const MARQUEE =
   'Glute-focused · Client-First · 1 on 1 · Online coaching · Group training · 60-day commitment · '

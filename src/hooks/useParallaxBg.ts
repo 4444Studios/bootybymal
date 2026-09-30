@@ -2,10 +2,18 @@ import { useEffect, type RefObject } from 'react'
 
 const MOBILE_QUERY = '(max-width: 768px)'
 
+type Options = {
+  /** When true (default), only run JS parallax below 768px. */
+  mobileOnly?: boolean
+}
+
 export function useParallaxBg(
   sectionRef: RefObject<HTMLElement | null>,
-  bgRef: RefObject<HTMLElement | null>
+  bgRef: RefObject<HTMLElement | null>,
+  options: Options = {}
 ) {
+  const { mobileOnly = true } = options
+
   useEffect(() => {
     const section = sectionRef.current
     const bg = bgRef.current
@@ -16,7 +24,7 @@ export function useParallaxBg(
     let raf = 0
 
     const updateParallax = () => {
-      if (!window.matchMedia(MOBILE_QUERY).matches || reduceMotion()) {
+      if (reduceMotion() || (mobileOnly && !window.matchMedia(MOBILE_QUERY).matches)) {
         bg.style.transform = ''
         return
       }
@@ -44,5 +52,5 @@ export function useParallaxBg(
       mq.removeEventListener('change', schedule)
       bg.style.transform = ''
     }
-  }, [sectionRef, bgRef])
+  }, [sectionRef, bgRef, mobileOnly])
 }

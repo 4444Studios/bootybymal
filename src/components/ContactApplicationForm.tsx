@@ -122,16 +122,16 @@ export default function ContactApplicationForm() {
   }, [wizardOpen])
 
   useEffect(() => {
-    if (!isMobile || wizardOpen || submitted) return
-    if (window.location.hash === '#contact') {
-      setWizardOpen(true)
-    }
-    const onHashChange = () => {
+    if (!isMobile || submitted) return
+
+    const openFromHash = () => {
       if (window.location.hash === '#contact') setWizardOpen(true)
     }
-    window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
-  }, [isMobile, wizardOpen, submitted])
+
+    openFromHash()
+    window.addEventListener('hashchange', openFromHash)
+    return () => window.removeEventListener('hashchange', openFromHash)
+  }, [isMobile, submitted])
 
   const fillLocationFromCoordinates = useCallback(async (latitude: number, longitude: number) => {
     const line = await reverseGeocode(latitude, longitude)
@@ -351,6 +351,10 @@ export default function ContactApplicationForm() {
     setCurrentStep(1)
     setErrors({})
     setSubmitError(null)
+    if (window.location.hash === '#contact') {
+      const { pathname, search } = window.location
+      window.history.replaceState(null, '', `${pathname}${search}`)
+    }
   }, [formData])
 
   useEffect(() => {
