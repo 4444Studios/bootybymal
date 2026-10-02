@@ -283,7 +283,7 @@ html:has(.look-v2) {
 .look-v2 .ed-closing .footer {
   margin-top: 0;
   background: transparent;
-  border-top-color: var(--ed-line);
+  border-top: 0;
 }
 
 .ed-ig-fab {

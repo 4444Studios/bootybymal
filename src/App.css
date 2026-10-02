@@ -793,9 +793,8 @@
 
 /* —— Footer —— */
 .footer {
-  padding: 2.4rem 1.25rem 2.6rem;
+  padding: 1.25rem 1.25rem 1.4rem;
   background: #000;
-  border-top: 1px solid var(--bbm-border);
 }
 
 .footer-content {
@@ -976,16 +975,17 @@
   }
 
   .footer {
-    padding: 2rem 1.15rem calc(2.2rem + env(safe-area-inset-bottom, 0px));
+    padding: 1.1rem 1.15rem calc(1.2rem + env(safe-area-inset-bottom, 0px));
   }
 
   .footer-content {
     flex-direction: column;
     text-align: center;
+    gap: 0.5rem;
   }
 
   .footer-brand img {
-    height: 3.4rem;
+    height: 2.8rem;
   }
 
   .footer-links {

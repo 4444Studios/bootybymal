@@ -6,7 +6,7 @@ const SRC = path.resolve('src/assets')
 const OUT = path.resolve('src/assets/opt')
 
 const JOBS = [
-  ...['trainer1', 'trainer2', 'trainer3', 'trainer4', 'trainer6', 'Trainer9'].map(n => ({
+  ...['trainer1', 'trainer4', 'trainer6', 'Trainer9', 'trainer10', 'trainer11'].map(n => ({
     from: `${n}.JPG`,
     to: `${n.toLowerCase()}.webp`,
     width: 1400,
@@ -24,6 +24,8 @@ const JOBS = [
   { from: 'after2.JPG', to: 'after2.webp', width: 900, quality: 78 },
   { from: 'before3.JPG', to: 'before3.webp', width: 900, quality: 78 },
   { from: 'after3.jpeg', to: 'after3.webp', width: 900, quality: 78 },
+  { from: 'before4.jpeg', to: 'before4.webp', width: 900, quality: 78 },
+  { from: 'after4.jpeg', to: 'after4.webp', width: 900, quality: 78 },
   { from: 'bbm-wordmark.jpg', to: 'bbm-wordmark.webp', width: 640, quality: 85 },
 ]
 

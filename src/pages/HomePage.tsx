@@ -6,6 +6,8 @@ import before2 from '../assets/opt/before2.webp'
 import after2 from '../assets/opt/after2.webp'
 import before3 from '../assets/opt/before3.webp'
 import after3 from '../assets/opt/after3.webp'
+import before4 from '../assets/opt/before4.webp'
+import after4 from '../assets/opt/after4.webp'
 import trainer5 from '../assets/opt/trainer5.webp'
 import trainer7 from '../assets/opt/trainer7.webp'
 import trainer8 from '../assets/opt/trainer8.webp'
@@ -25,6 +27,7 @@ const TRANSFORMATIONS = [
   { before: before1, after: after1 },
   { before: before2, after: after2 },
   { before: before3, after: after3 },
+  { before: before4, after: after4 },
 ]
 
 export default function HomePage() {
